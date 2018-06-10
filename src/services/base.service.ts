@@ -38,7 +38,7 @@ export class BaseService {
           records: results,
           pagination: new Pagination({
             pageIndex: 1,
-            totalPage: Math.ceil(size / param.count!),
+            totalPage: Math.ceil(size / (param.count! || 5)),
             totalRecord: size
           })
         })

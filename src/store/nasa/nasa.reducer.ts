@@ -5,7 +5,8 @@ import { NasaTypes } from "./nasa.type";
 import _mutation from "./nasa.mutation";
 
 const initialNasaState = new NasaState({
-
+  apods: [],
+  pagination: {}
 })
 const nasaReducer: Reducer<INasaState> =
   (state: INasaState = initialNasaState, action: ITypedAction<any>): INasaState => {

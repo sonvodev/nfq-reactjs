@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'element-theme-default'
 import Axios from 'axios'
 import { AxiosHelper } from './utils/AxiosHelper';
 import { Provider } from 'react-redux'

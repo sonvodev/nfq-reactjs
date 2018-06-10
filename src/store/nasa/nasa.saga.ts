@@ -14,6 +14,7 @@ export function* filterApods(action: ITypedAction<INasaParameter>) {
     const result = yield service.filterApods(action.payload!)
     if (result) {
       yield put(nasaActions.setApods!(result))
+      yield action.meta.resolve(result)
     } else { yield action.meta.reject(result) }
 
   }

@@ -8,6 +8,11 @@ import { ITypedAction } from '../../store';
 import { INasaParameter, NasaParameter } from '../../models/nasa/nasa-parameter.model';
 import { NasaTypes } from '../../store/nasa/nasa.type';
 
+import { ActionComponent } from '../../components'
+import { Message } from 'element-react'
+import NasaListing from './components/nasa-listing/NasaListing'
+import { INasaListing } from '../../models/nasa/nasa-listing.model.';
+
 class NasaContainer extends React.Component<IProps, IState>{
   /**
    *
@@ -21,10 +26,31 @@ class NasaContainer extends React.Component<IProps, IState>{
   }
   componentDidMount() {
     this.props.loadApods!(this.state.searchParameter)
+      .catch((error: any) => Message.error(error))
+  }
+
+  handleDelete(apod: INasaListing) {
+    console.log(apod)
+  }
+  handlePreview(apod: INasaListing) {
+    console.log(apod)
+  }
+  handleModalVisible(isPreview: boolean, apod: INasaListing) {
+    console.log(isPreview, apod)
   }
   render() {
+    const { apods, pagination } = this.props
     return (
-      <div>Nasa Container</div>
+      <div>
+        <ActionComponent />
+        <div className="container">
+          <NasaListing source={apods!} pagination={pagination!}
+            onDeleteClick={this.handleDelete.bind(this)}
+            onDoubleClick={this.handleModalVisible.bind(this, false)}
+            onPreviewClick={this.handleModalVisible.bind(this, true)}
+          />
+        </div>
+      </div>
     );
   }
 }
