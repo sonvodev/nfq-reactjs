@@ -1,5 +1,26 @@
-export interface INasaMuatation { }
-export class NasaMuatation implements INasaMuatation { }
+import { INasaListing } from "../../models/nasa/nasa-listing.model.";
+import { IPagination } from "../../models/pagination";
+import { INasaState } from "./nasa.state";
+import { ActivityStatus } from "../../common/enum";
+import { ITypedAction } from "..";
+
+interface ILoadingPayload<T> {
+  records: T[]
+  pagination: IPagination
+}
+
+export interface INasaMuatation {
+  receivedApods: (state: INasaState, action: ITypedAction<ILoadingPayload<INasaListing>>) => void
+}
+export class NasaMuatation implements INasaMuatation {
+  receivedApods(state: INasaState, action: ITypedAction<ILoadingPayload<INasaListing>>) {
+    return Object.assign({}, state, {
+      apods: action.payload!.records,
+      pagination: action.payload!.pagination,
+      listingActivityStatus: ActivityStatus.Loaded
+    })
+  }
+}
 
 const _mutation = new NasaMuatation
 export default _mutation
