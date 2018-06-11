@@ -22,10 +22,10 @@ class NasaEditingModal extends React.Component<IProps, IState>{
       suggestions: props.suggestions!
     }
     this.handleSearch = props.onFetchSuggestion!.bind(this)
+    this.handleSelect = props.onSelect!.bind(this)
   }
 
   componentWillReceiveProps(props: IProps) {
-    console.log(props.suggestions)
     this.setState({
       suggestions: props.suggestions!,
       apod: props.entity
@@ -39,6 +39,8 @@ class NasaEditingModal extends React.Component<IProps, IState>{
   }
 
   handleSearch(query: string) { }
+  handleSelect(value: INasaListing[]) { }
+
 
   handleAvatarSuccess(res: any, file: any) {
     const { apod } = this.state
@@ -46,11 +48,6 @@ class NasaEditingModal extends React.Component<IProps, IState>{
     this.setState({ apod: apod })
   }
 
-  handleSelect(value: INasaListing[]) {
-    if (value.length > 0) {
-      this.setState({ apod: value[0] })
-    }
-  }
   beforeAvatarUpload(file: any) {
     const isImage = file.type === MediaTypes.ImageJPEG || file.type === MediaTypes.ImagePNG || file.type === MediaTypes.ImageJPG;
     const isLt2M = file.size / 1024 / 1024 < 2;

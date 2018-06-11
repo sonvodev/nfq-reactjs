@@ -6,6 +6,8 @@ export interface IProps {
   apods?: INasaListing[]
   pagination?: IPagination
   loadApods?: (param: INasaParameter) => any;
+  saveApod?: (apod: INasaListing) => Promise<any>
+  deleteApod?: (docId: string) => Promise<any>
 }
 export class PropsMapper {
   /**

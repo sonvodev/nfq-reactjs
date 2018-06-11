@@ -16,6 +16,8 @@ const nasaReducer: Reducer<INasaState> =
         return _mutation.receivedApods(state, action)
       case NasaTypes.FETCH_APODS_SUCCESS:
         return _mutation.receivedSuggestions(state, action)
+      case NasaTypes.FETCH_APODS_SUCCESS:
+        return _mutation.receiveActivity(state, action)
       default:
         return state;
     }

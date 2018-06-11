@@ -12,13 +12,9 @@ export interface INasaAction extends IRootAction {
   setSuggestion?: (suggestion: INasaListing[]) => ITypedAction<INasaListing[]>
 }
 export class NasaAction implements INasaAction {
-  loadingActivity?(activity: ActivityStatus): ITypedAction<ActivityStatus> {
-    return { type: NasaTypes.ACTIVITY_LOADING, payload: activity }
+  setActivity?(activity: ActivityStatus, type: string): ITypedAction<ActivityStatus> {
+    return { type: NasaTypes[type], payload: activity }
   }
-  fetchingActivity?(activity: ActivityStatus): ITypedAction<ActivityStatus> {
-    return { type: NasaTypes.ACTIVITY_LOADING, payload: activity }
-  }
-
   setApods?(payload: {
     records?: INasaListing[],
     pagination: IPagination

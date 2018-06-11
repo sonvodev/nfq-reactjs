@@ -12,6 +12,7 @@ interface ILoadingPayload<T> {
 export interface INasaMuatation {
   receivedApods: (state: INasaState, action: ITypedAction<ILoadingPayload<INasaListing>>) => void
   receivedSuggestions: (state: INasaState, action: ITypedAction<ILoadingPayload<INasaListing>>) => void
+  receiveActivity: (state: INasaState, action: ITypedAction<ILoadingPayload<ActivityStatus>>) => void
 }
 export class NasaMuatation implements INasaMuatation {
   receivedApods(state: INasaState, action: ITypedAction<ILoadingPayload<INasaListing>>) {
@@ -27,6 +28,10 @@ export class NasaMuatation implements INasaMuatation {
       suggestions: action.payload
     })
   }
+  receiveActivity(state: INasaState, action: ITypedAction<ILoadingPayload<ActivityStatus>>) {
+    return state
+  }
+
 }
 
 const _mutation = new NasaMuatation
