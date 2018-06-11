@@ -1,4 +1,4 @@
-import { INasaListing } from "../../models/nasa/nasa-listing.model.";
+import { INasaListing } from "../../models/nasa/nasa-listing.model";
 import { IPagination } from "../../models/pagination";
 import { INasaState } from "./nasa.state";
 import { ActivityStatus } from "../../common/enum";
@@ -11,6 +11,7 @@ interface ILoadingPayload<T> {
 
 export interface INasaMuatation {
   receivedApods: (state: INasaState, action: ITypedAction<ILoadingPayload<INasaListing>>) => void
+  receivedSuggestions: (state: INasaState, action: ITypedAction<ILoadingPayload<INasaListing>>) => void
 }
 export class NasaMuatation implements INasaMuatation {
   receivedApods(state: INasaState, action: ITypedAction<ILoadingPayload<INasaListing>>) {
@@ -18,6 +19,12 @@ export class NasaMuatation implements INasaMuatation {
       apods: action.payload!.records,
       pagination: action.payload!.pagination,
       listingActivityStatus: ActivityStatus.Loaded
+    })
+  }
+  receivedSuggestions(state: INasaState, action: ITypedAction<ILoadingPayload<INasaListing>>) {
+    return Object.assign({}, state, {
+      fetchingActivityStatus: ActivityStatus.Loaded,
+      suggestions: action.payload
     })
   }
 }

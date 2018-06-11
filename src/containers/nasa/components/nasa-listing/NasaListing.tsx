@@ -1,18 +1,22 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import './NasaListing.scss';
 import { IProps, IState } from './NasaListingPropsState';
-import { INasaListing } from '../../../../models/nasa/nasa-listing.model.';
-import { Table, Glyphicon } from 'react-bootstrap';
+import { INasaListing } from '../../../../models/nasa/nasa-listing.model';
+import { Table, Glyphicon, FormGroup, FormControl } from 'react-bootstrap';
 import { MediaTypes } from '../../../../common/enum';
 import * as moment from 'moment';
+import { PaginationComponent } from '../../../../components'
 class NasaListing extends React.Component<IProps, IState>{
   /**
    *
    */
   constructor(props: Readonly<IProps>) {
     super(props);
+    this.state = {
+      param: props.param!
+    }
   }
-
   _renderIconByMediaType(media_type?: string) {
     if (media_type === MediaTypes.Image) {
       return <Glyphicon glyph='picture' />
@@ -23,9 +27,23 @@ class NasaListing extends React.Component<IProps, IState>{
     }
   }
 
+  handleChangeCount(event: any) {
+    const value = (ReactDOM.findDOMNode(event.target) as any).value
+    const { param } = this.state
+    param.count = parseInt(value)
+    this.setState({ ...this.state, param });
+    this.props.fetchData!(param);
+  }
+  handleChangePageIndex(value: number) {
+    const { param } = this.state
+    param.pageIndex = value
+    this.setState({ ...this.state, param });
+    this.props.fetchData!(param);
+  }
   render() {
     const { source,
-      // pagination,
+      pagination,
+      param,
       onDeleteClick,
       onDoubleClick,
       onPreviewClick
@@ -62,7 +80,24 @@ class NasaListing extends React.Component<IProps, IState>{
             </tr>)
           }
         </tbody>
+        <tfoot>
+          <tr>
+            <th className='text-left' colSpan={4}>
+              <PaginationComponent pagination={pagination} onChange={this.handleChangePageIndex.bind(this)} />
+            </th>
+            <th className='text-right' colSpan={2}>
+              <FormGroup controlId="formControlsSelect">
+                <FormControl componentClass="select" placeholder="select" onChange={this.handleChangeCount.bind(this)} value={param!.count}>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                </FormControl>
+              </FormGroup>
+            </th>
+          </tr>
+        </tfoot>
       </Table>
+
     );
   }
 }

@@ -1,4 +1,4 @@
-import { INasaListing } from "../../models/nasa/nasa-listing.model.";
+import { INasaListing } from "../../models/nasa/nasa-listing.model";
 import { INasaParameter } from "../../models/nasa/nasa-parameter.model";
 import { IPagination } from "../../models/pagination";
 
@@ -21,4 +21,7 @@ export class PropsMapper {
 }
 export interface IState {
   searchParameter: INasaParameter
+  modalVisible: boolean
+  apod: INasaListing | null
+  isPreviewing: boolean
 }

@@ -22,6 +22,24 @@ export function* filterApods(action: ITypedAction<INasaParameter>) {
     yield action.meta.reject(ex)
   }
 }
+
+export function* fetchSuggestion(action: ITypedAction<string>) {
+  try {
+    yield put(nasaActions.fetchingActivity!(ActivityStatus.Loading))
+    const result = yield service.fetchSuggestion(action.payload!)
+    if (result) {
+      yield put(nasaActions.setSuggestion!(result))
+      yield action.meta.resolve(result)
+    } else { yield action.meta.reject(result) }
+
+  }
+  catch (ex) {
+    yield action.meta.reject(ex)
+  }
+}
 export function* watchFilterApods() {
   yield takeEvery(NasaTypes.FILTER_APODS, filterApods)
+}
+export function* watchFetchSuggestion() {
+  yield takeEvery(NasaTypes.FETCH_APODS, fetchSuggestion)
 }

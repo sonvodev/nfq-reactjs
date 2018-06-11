@@ -6,6 +6,7 @@ import _mutation from "./nasa.mutation";
 
 const initialNasaState = new NasaState({
   apods: [],
+  suggestions: [],
   pagination: {}
 })
 const nasaReducer: Reducer<INasaState> =
@@ -13,6 +14,8 @@ const nasaReducer: Reducer<INasaState> =
     switch (action.type) {
       case NasaTypes.FILTER_APODS_SUCCESS:
         return _mutation.receivedApods(state, action)
+      case NasaTypes.FETCH_APODS_SUCCESS:
+        return _mutation.receivedSuggestions(state, action)
       default:
         return state;
     }

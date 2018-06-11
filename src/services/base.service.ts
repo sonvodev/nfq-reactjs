@@ -18,7 +18,6 @@ export class BaseService {
   }
 
   protected selectCollection<T, TParam>(colletionName: string, param: IParameterBaseModel) {
-    console.log(colletionName, param)
     const collection = StoreContext.collection(colletionName)
 
     let size: number;
